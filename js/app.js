@@ -27,11 +27,15 @@ formulario.addEventListener('submit', submitCita)
 
 function datosCita(e) {
     citaObj[e.target.name] = e.target.value
-    console.log(citaObj)
 }
 
 function submitCita(e) {
     e.preventDefault()
+
+    if( Object.values(citaObj).some(valor => valor.trim() === '') ) {
+        console.log('Todos los campos son obligatorios')
+        return
+    }
 
     console.log('Enviando formulario')
 }

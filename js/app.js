@@ -25,23 +25,6 @@ sintomasInput.addEventListener('change', datosCita)
 
 formulario.addEventListener('submit', submitCita)
 
-function datosCita(e) {
-    citaObj[e.target.name] = e.target.value
-}
-
-function submitCita(e) {
-    e.preventDefault()
-
-    if( Object.values(citaObj).some(valor => valor.trim() === '') ) {
-        new Notificacion({
-            texto: 'Todos los campos son obligatorios',
-            tipo: 'error'
-        })
-        return
-    }
-
-}
-
 class Notificacion {
 
     constructor( {texto, tipo} ) {
@@ -74,4 +57,37 @@ class Notificacion {
             alerta.remove()
         }, 3000);
     }
+}
+
+class AdminCitas {
+    
+    constructor() {
+        this.citas = []
+    }
+
+    agregar(cita) {
+        this.citas = [...this.citas, cita]
+
+        console.log(this.citas)
+    }
+}
+
+function datosCita(e) {
+    citaObj[e.target.name] = e.target.value
+}
+
+const citas = new AdminCitas()
+
+function submitCita(e) {
+    e.preventDefault()
+
+    if( Object.values(citaObj).some(valor => valor.trim() === '') ) {
+        new Notificacion({
+            texto: 'Todos los campos son obligatorios',
+            tipo: 'error'
+        })
+        return
+    }
+
+    citas.agregar(citaObj)
 }

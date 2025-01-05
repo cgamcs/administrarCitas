@@ -87,10 +87,29 @@ class AdminCitas {
             paciente.classList.add('font-normal', 'mb-3', 'text-gray-700', 'normal-case')
             paciente.innerHTML = `<span class="font-bold uppercase">Paciente: </span> ${cita.paciente}`
 
-            // Mostrando en el HTML
-            divCita.appendChild(paciente)
+            const propietario = document.createElement('p');
+            propietario.classList.add('font-normal', 'mb-3', 'text-gray-700', 'normal-case')
+            propietario.innerHTML = `<span class="font-bold uppercase">Propietario: </span> ${cita.propietario}`;
 
-            contenedorCitas.appendChild(divCita)
+            const email = document.createElement('p');
+            email.classList.add('font-normal', 'mb-3', 'text-gray-700', 'normal-case')
+            email.innerHTML = `<span class="font-bold uppercase">E-mail: </span> ${cita.email}`;
+
+            const fecha = document.createElement('p');
+            fecha.classList.add('font-normal', 'mb-3', 'text-gray-700', 'normal-case')
+            fecha.innerHTML = `<span class="font-bold uppercase">Fecha: </span> ${cita.fecha}`;
+
+            const sintomas = document.createElement('p');
+            sintomas.classList.add('font-normal', 'mb-3', 'text-gray-700', 'normal-case')
+            sintomas.innerHTML = `<span class="font-bold uppercase">Síntomas: </span> ${cita.sintomas}`;
+
+            // Agregar al HTML
+            divCita.appendChild(paciente);
+            divCita.appendChild(propietario);
+            divCita.appendChild(email);
+            divCita.appendChild(fecha);
+            divCita.appendChild(sintomas);
+            contenedorCitas.appendChild(divCita);
         })
     }
 }
@@ -113,4 +132,23 @@ function submitCita(e) {
     }
 
     citas.agregar(citaObj)
+    formulario.reset()
+    reiniciarObjetoCita()
+}
+
+function reiniciarObjetoCita() {
+    // Reiniciar el objeto
+    // citaObj.paciente = ''
+    // citaObj.propietario = ''
+    // citaObj.email = ''
+    // citaObj.fecha = ''
+    // citaObj.sintomas = ''
+
+    Object.assign(citaObj, {
+        paciente: '',
+        propietario: '',
+        email: '',
+        fecha: '',
+        sintomas: ''
+    })
 }

@@ -6,7 +6,7 @@ const fechaInput = document.querySelector('#fecha')
 const sintomasInput = document.querySelector('#sintomas')
 
 const formulario = document.querySelector('#formulario-cita')
-
+const formularioInput = document.querySelector('#formulario-cita input[type="submit"]')
 const contenedorCitas = document.querySelector('#citas')
 
 // Objeto de cita
@@ -72,6 +72,12 @@ class AdminCitas {
 
     agregar(cita) {
         this.citas = [...this.citas, cita]
+        this.mostrar()
+    }
+
+    editar(citaActualizada) {
+        // Identifica la cita y reescribe al objeto nuevo que agregamos
+        this.citas = this.citas.map( cita => cita.id === citaActualizada.id ? citaActualizada : cita )
         this.mostrar()
     }
 
@@ -156,7 +162,11 @@ function submitCita(e) {
     }
 
     if(editando) {
-        console.log('Editando registro')
+        citas.editar(structuredClone(citaObj))
+        new Notificacion({
+            texto: 'Guardado correctamente',
+            tipo: 'exito'
+        })
     } else {
         // Almacena una copia de citaObj
         citas.agregar(structuredClone(citaObj))
@@ -175,6 +185,8 @@ function submitCita(e) {
 
     formulario.reset()
     reiniciarObjetoCita()
+    formularioInput.value = 'Registrar paciente'
+    editando = false
 }
 
 function reiniciarObjetoCita() {
@@ -210,4 +222,6 @@ function cargarEdicion(cita) {
     sintomasInput.value = cita.sintomas
 
     editando = true
+
+    formularioInput.value = 'Guardar cambios'
 }

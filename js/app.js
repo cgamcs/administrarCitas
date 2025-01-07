@@ -28,6 +28,8 @@ sintomasInput.addEventListener('change', datosCita)
 
 formulario.addEventListener('submit', submitCita)
 
+let editando = false
+
 class Notificacion {
 
     constructor( {texto, tipo} ) {
@@ -153,22 +155,26 @@ function submitCita(e) {
         return
     }
 
-    // Almacena una copia de citaObj
-    citas.agregar(structuredClone(citaObj))
+    if(editando) {
+        console.log('Editando registro')
+    } else {
+        // Almacena una copia de citaObj
+        citas.agregar(structuredClone(citaObj))
+        new Notificacion({
+            texto: 'Paciente registrado',
+            tipo: 'exito'
+        })
+    }
 
     /*
-        Existen dos formas puede ser como citas.agregar({...citaObj})
-        o con la funcion mas reciente de JS citas.agregar(structuredClone(citaObj))
+        Existen dos formas puede ser
+        como citas.agregar({...citaObj}) o con
+        la funcion mas reciente de JS
+        citas.agregar(structuredClone(citaObj))
     */
 
     formulario.reset()
     reiniciarObjetoCita()
-
-    // Mostrar notificacion de exito
-    new Notificacion({
-        texto: 'Paciente registrado',
-        tipo: 'exito'
-    })
 }
 
 function reiniciarObjetoCita() {
@@ -195,11 +201,13 @@ function generarId() {
 }
 
 function cargarEdicion(cita) {
-    console.log(cita)
+    Object.assign(citaObj, cita)
 
     pacienteInput.value = cita.paciente
     propietarioInput.value = cita.propietario
     emailInput.value = cita.email
     fechaInput.value = cita.fecha
     sintomasInput.value = cita.sintomas
+
+    editando = true
 }

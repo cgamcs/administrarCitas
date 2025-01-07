@@ -123,6 +123,7 @@ const citas = new AdminCitas()
 function submitCita(e) {
     e.preventDefault()
 
+    // Mostrar notificacion de error en caso de que falte ingresar algun input
     if( Object.values(citaObj).some(valor => valor.trim() === '') ) {
         new Notificacion({
             texto: 'Todos los campos son obligatorios',
@@ -131,19 +132,22 @@ function submitCita(e) {
         return
     }
 
-    citas.agregar(citaObj)
+    // Almacena una copia de citaObj
+    citas.agregar({...citaObj})
+
     formulario.reset()
     reiniciarObjetoCita()
+    
+    // Mostrar notificacion de exito
+    new Notificacion({
+        texto: 'Paciente registrado',
+        tipo: 'exito'
+    })
 }
 
 function reiniciarObjetoCita() {
-    // Reiniciar el objeto
-    // citaObj.paciente = ''
-    // citaObj.propietario = ''
-    // citaObj.email = ''
-    // citaObj.fecha = ''
-    // citaObj.sintomas = ''
 
+    // Reiniciar el objeto
     Object.assign(citaObj, {
         paciente: '',
         propietario: '',

@@ -11,6 +11,7 @@ const contenedorCitas = document.querySelector('#citas')
 
 // Objeto de cita
 const citaObj = {
+    id: generarId(),
     paciente: '',
     propietario: '',
     email: '',
@@ -171,9 +172,16 @@ function submitCita(e) {
 }
 
 function reiniciarObjetoCita() {
+    // citaObj.id = generarId();
+    // citaObj.paciente = '';
+    // citaObj.propietario = '';
+    // citaObj.email = '';
+    // citaObj.fecha = '';
+    // citaObj.sintomas = '';
 
     // Reiniciar el objeto
     Object.assign(citaObj, {
+        id: generarId(),
         paciente: '',
         propietario: '',
         email: '',
@@ -182,6 +190,16 @@ function reiniciarObjetoCita() {
     })
 }
 
+function generarId() {
+    return Math.random().toString(36).substring(2) + Date.now()
+}
+
 function cargarEdicion(cita) {
     console.log(cita)
+
+    pacienteInput.value = cita.paciente
+    propietarioInput.value = cita.propietario
+    emailInput.value = cita.email
+    fechaInput.value = cita.fecha
+    sintomasInput.value = cita.sintomas
 }

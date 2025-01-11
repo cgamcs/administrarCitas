@@ -678,6 +678,7 @@ video {
 
 .overflow-y-scroll {
   overflow-y: scroll;
+  scrollbar-width: none;
 }
 
 .rounded-lg {
@@ -899,10 +900,6 @@ video {
   .lg\:w-3\/5 {
     width: 60%;
   }
-}
-
-.overflow {
-  overflow: hidden;
 }
 
 .notificacion-ui {

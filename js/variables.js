@@ -1,6 +1,8 @@
 import { generarId } from "./funciones.js"
 
-let editando = false
+let editando = {
+    value: false
+}
 
 // Objeto de cita
 const citaObj = {

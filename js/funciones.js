@@ -1,7 +1,7 @@
 import Notificacion from './classes/Notificacion.js'
 import AdminCitas from './classes/AdminCitas.js'
 import { citaObj, editando } from './variables.js'
-import { formulario, formularioInput, pacienteInput, propietarioInput, emailInput, fechaInput, sintomasInput } from './selectores'
+import { formulario, formularioInput, pacienteInput, propietarioInput, emailInput, fechaInput, sintomasInput } from './selectores.js'
 
 const citas = new AdminCitas()
 
@@ -21,7 +21,7 @@ export function submitCita(e) {
         return
     }
 
-    if(editando) {
+    if(editando.value) {
         citas.editar(structuredClone(citaObj))
         new Notificacion({
             texto: 'Guardado correctamente',
@@ -46,7 +46,7 @@ export function submitCita(e) {
     formulario.reset()
     reiniciarObjetoCita()
     formularioInput.value = 'Registrar paciente'
-    editando = false
+    editando.value = false
 }
 
 export function reiniciarObjetoCita() {
@@ -81,7 +81,7 @@ export function cargarEdicion(cita) {
     fechaInput.value = cita.fecha
     sintomasInput.value = cita.sintomas
 
-    editando = true
+    editando.value = true
 
     formularioInput.value = 'Guardar cambios'
 }

@@ -12,7 +12,7 @@ export default class Notificacion {
     mostrar() {
         // Crear la notificacion
         const alerta = document.createElement('DIV')
-        alerta.classList.add('text-center', 'w-full', 'p-3', 'text-white', 'my-5', 'alert', 'uppercase', 'font-bold', 'text-sm')
+        alerta.classList.add('text-center', 'w-full', 'p-3', 'text-white', 'my-5', 'alert', 'uppercase', 'font-bold', 'text-sm', 'notificacion-ui')
 
         // Eliminar alertas duplicadas
         const alertaPrevia = document.querySelector('.alert')
@@ -25,11 +25,15 @@ export default class Notificacion {
         alerta.textContent = this.texto
 
         // Insertar en el DOM
-        formulario.parentElement.insertBefore(alerta, formulario)
+        formulario.parentElement.parentElement.appendChild(alerta)
 
         // Quitar despues de 3 segundos
         setTimeout(() => {
-            alerta.remove()
+            alerta.classList.add('desaparece')
+
+            alerta.addEventListener('animationend', () => {
+                alerta.remove();
+            });
         }, 3000);
     }
 }

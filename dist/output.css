@@ -900,3 +900,38 @@ video {
     width: 60%;
   }
 }
+
+.overflow {
+  overflow: hidden;
+}
+
+.notificacion-ui {
+  border-radius: .5rem;
+  width: fit-content;
+  position: absolute;
+  top: 25px;
+  right: 20px;
+  animation: aparece .8s ease;
+}
+
+.desaparece {
+  animation: desaparece .8s ease;
+}
+
+@keyframes aparece {
+  from {
+    transform: translateX(200%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes desaparece {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(200%);
+  }
+}

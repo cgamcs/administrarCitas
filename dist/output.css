@@ -906,7 +906,7 @@ video {
   border-radius: .5rem;
   width: fit-content;
   position: fixed;
-  top: 25px;
+  top: 0;
   right: 20px;
   animation: aparece .8s ease;
 }

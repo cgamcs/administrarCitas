@@ -905,7 +905,7 @@ video {
 .notificacion-ui {
   border-radius: .5rem;
   width: fit-content;
-  position: absolute;
+  position: fixed;
   top: 25px;
   right: 20px;
   animation: aparece .8s ease;

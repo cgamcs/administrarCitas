@@ -4,6 +4,10 @@ let editando = {
     value: false
 }
 
+let contenedorDB = {
+    DB: null
+}
+
 // Objeto de cita
 const citaObj = {
     id: generarId(),
@@ -16,5 +20,6 @@ const citaObj = {
 
 export {
     citaObj,
-    editando
+    editando,
+    contenedorDB
 }

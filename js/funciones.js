@@ -1,11 +1,9 @@
 import Notificacion from './classes/Notificacion.js'
 import AdminCitas from './classes/AdminCitas.js'
-import { citaObj, editando } from './variables.js'
+import { citaObj, editando, contenedorDB } from './variables.js'
 import { formulario, formularioInput, pacienteInput, propietarioInput, emailInput, fechaInput, sintomasInput } from './selectores.js'
 
 const citas = new AdminCitas()
-
-let DB
 
 export function datosCita(e) {
     citaObj[e.target.name] = e.target.value
@@ -34,7 +32,7 @@ export function submitCita(e) {
         citas.agregar(structuredClone(citaObj))
 
         // Insertar registro en IdexedDB
-        const transaction = DB.transaction(['citas'], 'readwrite')
+        const transaction = contenedorDB.DB.transaction(['citas'], 'readwrite')
 
         // Habilitar el objectstore
         const objectStore = transaction.objectStore('citas')
@@ -49,6 +47,8 @@ export function submitCita(e) {
             })
 
             console.log('Cita agregada')
+
+            citas.mostrar()
         }
     }
 
@@ -114,10 +114,10 @@ export function crearDB() {
     // Si todo sale bien
     crearDB.onsuccess = function() {
         console.log('Se creo la base de datos correctamente')
+        contenedorDB.DB = crearDB.result
 
-        DB = crearDB.result
-
-        console.log(DB)
+        // Mostrar las citas almacenadas
+        citas.mostrar()
     }
 
     // Definimos el esquema

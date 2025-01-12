@@ -5,6 +5,8 @@ import { formulario, formularioInput, pacienteInput, propietarioInput, emailInpu
 
 const citas = new AdminCitas()
 
+let DB
+
 export function datosCita(e) {
     citaObj[e.target.name] = e.target.value
 }
@@ -84,4 +86,44 @@ export function cargarEdicion(cita) {
     editando.value = true
 
     formularioInput.value = 'Guardar cambios'
+}
+
+export function crearDB() {
+    // Crear la base de datos en version 1.0
+    const crearDB = window.indexedDB.open('citas', 1)
+
+    // Si hay un error
+    crearDB.onerror = function() {
+        console.log('Hubo un error')
+    }
+
+    // Si todo sale bien
+    crearDB.onsuccess = function() {
+        console.log('Se creo la base de datos correctamente')
+
+        DB = crearDB.result
+
+        console.log(DB)
+    }
+
+    // Definimos el esquema
+    crearDB.onupgradeneeded = function(e) {
+        const db = e.target.result
+
+        const objectStore = db.createObjectStore('citas', {
+            ketPath: 'id',
+            autoIncrement: true
+        })
+
+        // Definir todas las columnas
+        objectStore.createIndex('mascota', 'mascota', { unique: false })
+        objectStore.createIndex('propietario', 'propietario', { unique: false })
+        objectStore.createIndex('correo', 'correo', { unique: false })
+        objectStore.createIndex('fecha', 'fecha', { unique: false })
+        objectStore.createIndex('hora', 'hora', { unique: false })
+        objectStore.createIndex('sintomas', 'sintomas', { unique: false })
+        objectStore.createIndex('id', 'id', { unique: true })
+
+        console.log('Base de datos creada y lista')
+    }
 }

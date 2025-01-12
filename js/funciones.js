@@ -32,10 +32,24 @@ export function submitCita(e) {
     } else {
         // Almacena una copia de citaObj
         citas.agregar(structuredClone(citaObj))
-        new Notificacion({
-            texto: 'Paciente registrado',
-            tipo: 'exito'
-        })
+
+        // Insertar registro en IdexedDB
+        const transaction = DB.transaction(['citas'], 'readwrite')
+
+        // Habilitar el objectstore
+        const objectStore = transaction.objectStore('citas')
+
+        // Insertar en la BD
+        objectStore.add(citaObj)
+
+        transaction.oncomplete = () => {
+            new Notificacion({
+                texto: 'Paciente registrado',
+                tipo: 'exito'
+            })
+
+            console.log('Cita agregada')
+        }
     }
 
     /*
@@ -116,11 +130,10 @@ export function crearDB() {
         })
 
         // Definir todas las columnas
-        objectStore.createIndex('mascota', 'mascota', { unique: false })
+        objectStore.createIndex('paciente', 'paciente', { unique: false })
         objectStore.createIndex('propietario', 'propietario', { unique: false })
-        objectStore.createIndex('correo', 'correo', { unique: false })
+        objectStore.createIndex('email', 'email', { unique: false })
         objectStore.createIndex('fecha', 'fecha', { unique: false })
-        objectStore.createIndex('hora', 'hora', { unique: false })
         objectStore.createIndex('sintomas', 'sintomas', { unique: false })
         objectStore.createIndex('id', 'id', { unique: true })
 

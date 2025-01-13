@@ -1,6 +1,6 @@
 import { contenedorCitas } from '../selectores.js'
 import { contenedorDB } from '../variables.js'
-import { cargarEdicion } from "../funciones.js"
+import { cargarEdicion, animateDOMChange } from "../funciones.js"
 import Notificacion from './Notificacion.js'
 
 export default class AdminCitas {
@@ -67,7 +67,7 @@ export default class AdminCitas {
                     const { paciente, propietario, email, fecha, sintomas, id } = cursor.value
     
                     const divCita = document.createElement('DIV')
-                    divCita.classList.add('mx-5', 'my-10', 'bg-white', 'shadow-md', 'px-5', 'py-10', 'rounded-xl')
+                    divCita.classList.add('mx-5', 'my-10', 'bg-white', 'shadow-md', 'px-5', 'py-10', 'rounded-xl', 'members-table-rows')
     
                     const pacienteParrafo = document.createElement('P')
                     pacienteParrafo.classList.add('font-normal', 'mb-3', 'text-gray-700', 'normal-case')
@@ -99,7 +99,7 @@ export default class AdminCitas {
                     btnEditar.onclick = () => cargarEdicion(clone)
     
                     const btnEliminar = document.createElement('button');
-                    btnEliminar.classList.add('py-2', 'px-10', 'bg-red-600', 'hover:bg-red-700', 'text-white', 'font-bold', 'uppercase', 'rounded-lg', 'flex', 'items-center', 'gap-2');
+                    btnEliminar.classList.add('py-2', 'px-10', 'bg-red-600', 'hover:bg-red-700', 'text-white', 'font-bold', 'uppercase', 'rounded-lg', 'flex', 'items-center', 'gap-2', 'eliminar');
                     btnEliminar.innerHTML = 'Eliminar <svg fill="none" class="h-5 w-5" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>'
     
                     btnEliminar.onclick = () => this.eliminar(id)
@@ -117,7 +117,9 @@ export default class AdminCitas {
                     divCita.appendChild(fechaParrafo);
                     divCita.appendChild(sintomasParrafo);
                     divCita.appendChild(contenedorBotones)
-                    contenedorCitas.appendChild(divCita);
+                    // contenedorCitas.appendChild(divCita);
+
+                    animateDOMChange(() => { contenedorCitas.insertBefore(divCita, contenedorCitas.firstChild) })
     
                     // Ve al siguiente elemento
                     cursor.continue()

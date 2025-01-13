@@ -5,6 +5,8 @@ import { formulario, formularioInput, pacienteInput, propietarioInput, emailInpu
 
 const citas = new AdminCitas()
 
+let state;
+
 export function datosCita(e) {
     citaObj[e.target.name] = e.target.value
 }
@@ -154,4 +156,21 @@ export function crearDB() {
 
         console.log('Base de datos creada y lista')
     }
+}
+
+export function animateDOMChange(action) {
+    state = Flip.getState('.members-table-rows')
+    action();
+    runAnimation(state);
+}
+  
+function runAnimation(state) {
+    let timeline = Flip.from(state, {
+        absolute: true,
+        ease: "power1.inOut",
+        targets: ".members-table-rows",
+        scale: true,
+        simple: true,
+    })
+    timeline.play()
 }

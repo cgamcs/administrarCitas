@@ -588,6 +588,10 @@ video {
   margin-bottom: 1.25rem;
 }
 
+.mb-20 {
+  margin-bottom: 5rem;
+}
+
 .mb-10 {
   margin-bottom: 2.5rem;
 }
@@ -755,6 +759,10 @@ video {
   padding-bottom: 0.5rem;
 }
 
+.pa-20 {
+  padding-top: 2rem;
+}
+
 .text-center {
   text-align: center;
 }
@@ -880,7 +888,7 @@ video {
   }
 
   .md\:h-screen {
-    height: 100vh;
+    height: 85dvh;
   }
 
   .md\:w-1\/2 {

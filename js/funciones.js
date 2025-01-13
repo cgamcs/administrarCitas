@@ -23,10 +23,25 @@ export function submitCita(e) {
 
     if(editando.value) {
         citas.editar(structuredClone(citaObj))
-        new Notificacion({
-            texto: 'Guardado correctamente',
-            tipo: 'exito'
-        })
+
+        // Edita en IndexedDB
+        const transaction = contenedorDB.DB.transaction(['citas'], 'readwrite')
+        const objectStore = transaction.objectStore('citas')
+
+        objectStore.put(citaObj)
+
+        transaction.oncomplete = () => {
+            new Notificacion({
+                texto: 'Guardado correctamente',
+                tipo: 'exito'
+            })
+
+            citas.mostrar()
+        }
+
+        transaction.onerror = () => {
+            console.log('Hubo un error')
+        }
     } else {
         // Almacena una copia de citaObj
         citas.agregar(structuredClone(citaObj))
@@ -125,7 +140,7 @@ export function crearDB() {
         const db = e.target.result
 
         const objectStore = db.createObjectStore('citas', {
-            ketPath: 'id',
+            keyPath: 'id',
             autoIncrement: true
         })
 
